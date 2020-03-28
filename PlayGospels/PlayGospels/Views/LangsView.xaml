@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlayGospels.Views.LangsView"
+             xmlns:common="clr-namespace:PlayGospels.Common"
+             >
+
+    <ContentView.Resources>
+        <DataTemplate x:Key="LangTemplate">
+            <Label Text="{Binding}" HeightRequest="50" FontSize="16" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+        </DataTemplate>
+
+        <Style x:Key="LangListStyle" TargetType="CollectionView">
+            <Setter Property="ItemsSource" Value="{Binding Source={x:Static common:Given.Langs}}" />
+            <Setter Property="SelectionMode" Value="Single" />
+            <Setter Property="BackgroundColor" Value="{StaticResource LangColor}" />
+            <Setter Property="ItemTemplate" Value="{StaticResource LangTemplate}" />
+        </Style>
+    </ContentView.Resources>
+
+    <Grid Opacity="0.7" HeightRequest="350">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <CollectionView Grid.Column="0" SelectedItem="{Binding LangLeft}" Style="{StaticResource LangListStyle}"/>
+        <CollectionView Grid.Column="1" SelectedItem="{Binding LangSound}" Style="{StaticResource LangListStyle}" Margin="2,0,2,0"/>
+        <CollectionView Grid.Column="2" SelectedItem="{Binding LangRight}" Style="{StaticResource LangListStyle}"/>
+    </Grid>
+</ContentView>

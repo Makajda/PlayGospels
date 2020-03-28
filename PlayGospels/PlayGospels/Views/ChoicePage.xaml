@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlayGospels.Views.ChoicePage"
+             xmlns:common="clr-namespace:PlayGospels.Common"
+             NavigationPage.HasNavigationBar="False"
+             >
+
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="WidthRequest" Value="76"/>
+            <Setter Property="HeightRequest" Value="76"/>
+            <Setter Property="CornerRadius" Value="38"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource CtrBtnColor}"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="InfoStyle">
+            <Setter Property="WidthRequest" Value="76"/>
+            <Setter Property="HeightRequest" Value="76"/>
+            <Setter Property="CornerRadius" Value="38"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource CtrBtnColor}"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <CollectionView ItemsSource="{Binding Books}" SelectionMode="Single" SelectedItem="{Binding CurrentBook}" WidthRequest="150">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding Title}" HeightRequest="60" FontSize="16" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <CollectionView Grid.Column="1" ItemsSource="{Binding CurrentBook.Chapters}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="1" HorizontalItemSpacing="1"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame CornerRadius="20" Padding="0">
+                        <common:ToggleButton Text="{Binding Name}" BackgroundColor="{StaticResource CtrBtnColor}"
+                                             IsToggled="{Binding IsSelected}" ToggleColor="RoyalBlue" HeightRequest="60"/>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <common:AboutView Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="End" IsVisible="{Binding IsToggled}" BindingContext="{x:Reference btnInfo}"/>
+        <Frame Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Start" Padding="0" Style="{StaticResource InfoStyle}">
+            <common:ToggleButton Text="i" x:Name="btnInfo" ToggleColor="{StaticResource InfoColor}"/>
+        </Frame>
+
+        <StackLayout Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalOptions="End" Margin="0,1,0,0">
+            <Label Text="{Binding CurrentBook.Duration, StringFormat='{}{0:hh\\:mm\\:ss}'}" VerticalOptions="Center"
+                   IsVisible="{Binding CurrentBook.IsDuration}" FontSize="16"/>
+            <Button Text="&#x28F6;" Command="{Binding AllChaptersCommand}" Margin="10,0,0,0"/>
+            <Button Text="&#x2880;" Command="{Binding NoneChaptersCommand}"/>
+            <Button Text="&#x25B7;" Command="{Binding ToMediaCommand}" WidthRequest="123"/>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

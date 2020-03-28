@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PlayGospels.Common.AboutView"
+             >
+
+
+    <ContentView.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Text" Value="->"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+    </ContentView.Resources>
+
+    <Frame CornerRadius="50" Padding="50" Opacity="0.9" BackgroundColor="{StaticResource InfoColor}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Gospels wwordproject.org"/>
+            <Button Grid.Column="1" Clicked="ButtonWord_Click"/>
+            <Label Grid.Row="1" Text="Program github.com"/>
+            <Button Grid.Row="1" Grid.Column="1" Clicked="ButtonGit_Click"/>
+        </Grid>
+    </Frame>
+</ContentView>

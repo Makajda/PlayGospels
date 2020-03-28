@@ -1,0 +1,79 @@
+﻿Thank you for installing Xamarin.Essentials, be sure to read through our full documentation at:
+https://aka.ms/xamarinessentials
+For Android projects there is a small amount of setup needed to handle permissions. Please follow our short guide at:
+https://aka.ms/essentials-getstarted
+See our full release notes for more information: https://aka.ms/essentials-releasenotes
+
+1)mp3 куда скачивать в андроид? проверить создание папок
+2)в droid уплывает ItemsControl при отключении первого языка
+3)шрифты стихов и кнопок
+
+
+https://www.htmlsymbols.xyz/unicode?page=22
+https://play.google.com/store/apps/details?id=com.WordProject.HolyBible&showAllReviews=true
+
+
+вы получаете тексты на семи языках и возможность загрузить нужные audio.
+
+
+zip xamarin
+https://stackoverflow.com/questions/25859020/how-do-i-zip-files-in-xamarin-for-android
+https://stackoverflow.com/questions/33306144/create-zip-file-in-xamarin-forms-android
+https://github.com/icsharpcode/SharpZipLib
+
+
+media player
+https://github.com/Xamarians/MediaPlayer
+https://github.com/videolan/libvlcsharp/tree/master
+https://github.com/adamfisher/Xamarin.Forms.VideoPlayer
+https://github.com/Baseflow/XamarinMediaManager
+https://github.com/adrianstevens/Xamarin-Plugins/tree/master/SimpleAudioPlayer
+
+https://www.godo.dev/tutorials/xamarin-forms-play-audio/
+https://docs.microsoft.com/ru-ru/xamarin/android/app-fundamentals/android-audio
+https://github.com/jfversluis/CrossSimpleAudioPlayerSample
+
+
+
+samples
+https://github.com/adrianstevens/Xamarin-Forms
+
+maybe
+delete downloaded beside "i"
+переносить кнопку <> и сохранять её координаты?
+
+
+public IEnumerable<Book> GetVetus() { }
+public IEnumerable<Book> GetNovum() {
+    var books = new Book[] {
+        new Book("Matthæum", "Matthew", 28, 0),
+        new Book("Marcum", "Mark", 16, 1),
+        new Book("Lucam", "Luke", 24, 2),
+        new Book("Ioannem", "John", 21, 3),
+        //new Book("Actus", "", 28, 4),
+        //new Book("Ad Romanos", "", 16, 5),
+        //new Book("Ad Corinthios I", "", 16, 6),
+        //new Book("Ad Corinthios II", "", 13, 7),
+        //new Book("Galatas", "", 6, 8),
+        //new Book("Ad Ephesios", "", 6, 9),
+        //new Book("Ad Philippenses", "", 4, 10),
+        //new Book("Ad Colossenses", "", 4, 11),
+        //new Book("Ad Thessalonicenses I", "", 5, 12),
+        //new Book("Ad Thessalonicenses II", "", 3, 13),
+        //new Book("Ad Timotheum I", "", 6, 14),
+        //new Book("Ad Timotheum II", "", 4, 15),
+        //new Book("Ad Titum", "", 3, 16),
+        //new Book("Ad Philemonem", "", 1, 17),
+        //new Book("Ad Hebraeos", "", 13, 18),
+        //new Book("Iacobi", "", 5, 19),
+        //new Book("Petri I", "", 5, 20),
+        //new Book("Petri II", "", 3, 21),
+        //new Book("Ioannes I", "", 5, 22),
+        //new Book("Ioannes II", "", 1, 23),
+        //new Book("Ioannes III", "", 1, 24),
+        //new Book("Iudae", "", 1, 25),
+        //new Book("Apocalypsis", "", 22, 26),
+    };
+
+    return books;
+}

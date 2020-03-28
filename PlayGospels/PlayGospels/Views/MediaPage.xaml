@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlayGospels.Views.MediaPage"
+             xmlns:converters="clr-namespace:PlayGospels.Converters"
+             xmlns:views="clr-namespace:PlayGospels.Views"
+             xmlns:common="clr-namespace:PlayGospels.Common"
+             NavigationPage.HasNavigationBar="False"
+             x:Name="rootElement"
+             >
+
+    <ContentPage.Resources>
+        <converters:BoolToStringConverter TrueString="| |" FalseString="&#x25B7;" x:Key="PlayTextConverter"/>
+        <converters:BoolToGridLengthConverter x:Key="BoolToGridLengthConverter"/>
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+
+        <Style x:Key="VerseTextStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="{Binding BindingContext.MediaTextViewModel.FontSize, Source={x:Reference rootElement}}"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+        </Style>
+
+        <DataTemplate x:Key="VerseDataTemplate">
+            <StackLayout Padding="10,0,15,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{Binding BindingContext.MediaTextViewModel.IsLangLeft, Source={x:Reference rootElement}, Converter={StaticResource BoolToGridLengthConverter}}"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="{Binding BindingContext.MediaTextViewModel.IsLangRight, Source={x:Reference rootElement}, Converter={StaticResource BoolToGridLengthConverter}}"/>
+                    </Grid.ColumnDefinitions>
+
+                    <common:LabelJust Text="{Binding Value.Left}" Style="{StaticResource VerseTextStyle}" IsVisible="{Binding DataContext.MediaTextViewModel.IsLangLeft, Source={x:Reference rootElement}}"/>
+                    <Label Grid.Column="1" Text="{Binding Key}" Style="{StaticResource VerseTextStyle}"/>
+                    <common:LabelJust Grid.Column="2" Text="{Binding Value.Right}" Style="{StaticResource VerseTextStyle}" IsVisible="{Binding BindingContext.MediaTextViewModel.IsLangRight, Source={x:Reference rootElement}}"/>
+                </Grid>
+                <BoxView HeightRequest="0.5" Color="Black"/>
+            </StackLayout>
+        </DataTemplate>
+
+        <Style TargetType="Button">
+            <Setter Property="WidthRequest" Value="60"/>
+            <Setter Property="HeightRequest" Value="60"/>
+            <Setter Property="CornerRadius" Value="30"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource CtrBtnColor}"/>
+        </Style>
+
+        <Style TargetType="Frame">
+            <Setter Property="WidthRequest" Value="60"/>
+            <Setter Property="HeightRequest" Value="60"/>
+            <Setter Property="CornerRadius" Value="30"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource CtrBtnColor}"/>
+        </Style>
+
+        <Style TargetType="common:ToggleButton">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource CtrBtnColor}"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <common:LabelJust Text="{Binding InTheBeginning}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Style="{StaticResource VerseTextStyle}"
+                          IsVisible="{Binding MediaTextViewModel.IsAnyLang, Converter={StaticResource InverseBoolConverter}}"/>
+
+        <common:ItemsControl ItemsSource="{Binding MediaTextViewModel.Verses}" ItemTemplate="{StaticResource VerseDataTemplate}"
+                             IsVisible="{Binding MediaTextViewModel.IsAnyLang}"/>
+
+        <views:LangsView VerticalOptions="Start" HorizontalOptions="Center" IsVisible="{Binding IsLangShowedUp}"/>
+
+        <Grid Grid.Column="1" x:Name="controlPanel" WidthRequest="160"
+              IsVisible="{Binding IsCtrpnlHide, Converter={StaticResource InverseBoolConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Frame Grid.ColumnSpan="2">
+                <common:ToggleButton Text="{Binding LangCaption}" IsToggled="{Binding IsLangShowedUp}" ToggleColor="{StaticResource LangColor}"/>
+            </Frame>
+
+            <Button Grid.Row="1" Grid.Column="0" Text="&#x2304;" Command="{Binding MediaTextViewModel.FontSizeCommand}" CommandParameter="-1"/>
+            <Button Grid.Row="1" Grid.Column="1" Text="&#x2303;" Command="{Binding MediaTextViewModel.FontSizeCommand}" CommandParameter="1"/>
+
+            <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="Transparent" BorderColor="{StaticResource CtrBtnColor}">
+                <common:ToggleButton Text="&#x2B1A;" IsToggled="{Binding MediaTextViewModel.IsLangLeft}"
+                                     BackgroundColor="Transparent" ToggleColor="{StaticResource CtrBtnColor}"/>
+            </Frame>
+            <Frame Grid.Row="2" Grid.Column="1" BackgroundColor="Transparent" BorderColor="{StaticResource CtrBtnColor}">
+                <common:ToggleButton Text="&#x2B1A;" IsToggled="{Binding MediaTextViewModel.IsLangRight}"
+                                     BackgroundColor="Transparent" ToggleColor="{StaticResource CtrBtnColor}"/>
+            </Frame>
+
+            <Button Grid.Row="3" Grid.Column="0" Text="&#x263E;" Command="{Binding RepeatCommand}" CommandParameter="-1" />
+            <Button Grid.Row="3" Grid.Column="1" Text="&#x263D;" Command="{Binding RepeatCommand}" CommandParameter="1" />
+
+            <Label Grid.Row="4" Grid.Column="0" Text="{Binding Times}" HorizontalOptions="Center" FontSize="14"/>
+            <Label Grid.Row="4" Grid.Column="1" Text="{Binding MediaSoundViewModel.TLeft, StringFormat='{}{0:hh\\:mm\\:ss}'}"
+                   HorizontalOptions="Center" FontSize="14"/>
+
+            <Grid Grid.Row="5" Grid.ColumnSpan="2" IsVisible="{Binding MediaSoundViewModel.IsThereSound}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.618*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Text="-10" CornerRadius="10" FontSize="12"
+                        Command="{Binding MediaSoundViewModel.PositionCommand}" CommandParameter="-10"/>
+                <Button Grid.Column="1" Text="{Binding MediaSoundViewModel.IsPlay, Converter={StaticResource PlayTextConverter}}" CornerRadius="10"
+                        Command="{Binding MediaSoundViewModel.PlayCommand}"/>
+                <Button Grid.Column="2" Text="+30" CornerRadius="10" FontSize="12"
+                        Command="{Binding MediaSoundViewModel.PositionCommand}" CommandParameter="30"/>
+
+                <ProgressBar Grid.Row="1" Grid.ColumnSpan="3" Progress="{Binding MediaSoundViewModel.Progress}"/>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="Start" FontSize="14">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding BookTitle}"/>
+                            <Span Text=" "/>
+                            <Span Text="{Binding CurrentChapter.Name}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding MediaSoundViewModel.ALeft, StringFormat='{}{0:mm\\:ss}'}"
+                       HorizontalOptions="End" FontSize="14" Margin="0,0,5,0"/>
+            </Grid>
+
+            <StackLayout Grid.Row="5" Grid.ColumnSpan="2" IsVisible="{Binding MediaSoundViewModel.IsThereSound, Converter={StaticResource InverseBoolConverter}}">
+                <Button HeightRequest="50" Command="{Binding LoadSoundCommand}" CommandParameter="1"
+                        Text="{Binding CurrentChapter.Name, Mode=OneWay, StringFormat='&#x1D11E;{0} &#x2935; ~3m'}"/>
+                <Button HeightRequest="50" Command="{Binding LoadSoundCommand}" CommandParameter="2"
+                        Text="{Binding BookTitle, Mode=OneWay, StringFormat='&#x1D11E;{0} &#x2935; ~50m'}"/>
+                <Button HeightRequest="50" Command="{Binding LoadSoundCommand}" CommandParameter="3"
+                        Text="{Binding LangSound, Mode=OneWay, StringFormat='&#x1D11E;{0} &#x2935; ~200m'}"/>
+            </StackLayout>
+
+            <CollectionView Grid.Row="6" Grid.ColumnSpan="2" ItemsSource="{Binding Chapters}"
+                            SelectedItem="{Binding CurrentChapter}" SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="1" HorizontalItemSpacing="1"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="10">
+                            <Label Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Grid.Row="7" Grid.Column="0" Text="&gt;&gt;" BackgroundColor="Transparent" BorderColor="{StaticResource CtrBtnColor}" Command="{Binding CtrpnlCommand}"/>
+            <Button Grid.Row="7" Grid.Column="1" Text="&#x25A3;" Command="{Binding ToChoiceCommand}"/>
+        </Grid>
+
+        <Button Text="&lt;&lt;" Command="{Binding CtrpnlCommand}" Opacity="0.5" Margin="5"
+                BorderWidth="1" BorderColor="Black" BackgroundColor="Transparent"
+                VerticalOptions="End" HorizontalOptions="End" IsVisible="{Binding IsCtrpnlHide}"/>
+    </Grid>
+</ContentPage>
+    
